@@ -33,12 +33,12 @@ Denne microservice er udviklet med Flask og tilbyder CRUD-operationer for entite
 
 ** For at køre microservicen: **
 
-1. **Sørg for at have en `.env` fil i samme directory som `app.py`:**
+6. **Sørg for at have en `.env` fil i samme directory som `app.py`:**
    ```env
    DATABASE=service.db
    SECRET_KEY=din_hemmelige_noegle
 
-2. **Kør appen:**
+7. **Kør appen:**
 python app.py
 
 Microservicen kører nu typisk på http://127.0.0.1:5000.
