@@ -31,18 +31,16 @@ Denne microservice er udviklet med Flask og tilbyder CRUD-operationer for entite
 
 ## Kørsel
 
-For at køre microservicen:
+** For at køre microservicen: **
 
-1. Sørg for at have en `.env` fil i samme directory som `app.py`:
+1. **Sørg for at have en `.env` fil i samme directory som `app.py`:**
    ```env
    DATABASE=service.db
    SECRET_KEY=din_hemmelige_noegle
 
-2. Kør appen:
-
-bash
-Copy code
+2. **Kør appen:**
 python app.py
+
 Microservicen kører nu typisk på http://127.0.0.1:5000.
 
 Swagger UI: http://127.0.0.1:5000/apidocs/
