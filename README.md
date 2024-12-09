@@ -39,7 +39,8 @@ Denne microservice er udviklet med Flask og tilbyder CRUD-operationer for entite
    SECRET_KEY=din_hemmelige_noegle
 
 7. **Kør appen:**
-python app.py
+   ```env
+   python app.py
 
 Microservicen kører nu typisk på http://127.0.0.1:5000.
 
