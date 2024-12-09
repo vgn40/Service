@@ -17,7 +17,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 app.config['JWT_SECRET_KEY'] = SECRET_KEY
 jwt = JWTManager(app)
 
-# comment
+# comment qweqwe
 swagger_config = {
     "headers": [],
     "specs": [
