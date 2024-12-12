@@ -1,81 +1,119 @@
+---
+
 # Service Microservice API
 
-This is a RESTful API built using Flask to manage service records in a car subscription system. It enables users to create, retrieve, update, and delete service records, with security ensured through JWT authentication. The service also provides filtering capabilities and interactive API documentation via Swagger.
-
----
+This is a RESTful API built using Flask for managing service records within a car subscription system. It provides the ability to create, retrieve, update, and delete service entries, while ensuring security through JWT authentication. The service supports filtering service records and comes with detailed, interactive API documentation via Swagger.
 
 ## Features
-
-- **Create a Service**: Add a new service record with details like vehicle ID, service type, cost, and more.
-- **Get Services**: Retrieve all service records or filter them using various criteria.
-- **Update a Service**: Modify details of an existing service record.
-- **Delete a Service**: Remove a service record from the system by its ID.
-- **Swagger UI**: Interactive API documentation available for testing and exploration.
-- **JWT Authentication**: Secure access to endpoints using JWT tokens.
-
----
+- **Create a Service Record:** Add a new service entry by providing the required details.
+- **Get Services:** Retrieve all service records, or filter them by various parameters (e.g., vehicle ID, service type, date).
+- **Update a Service Record:** Modify the details of an existing service record.
+- **Delete a Service Record:** Remove an existing service entry by its ID.
+- **JWT Authentication:** Secure access to endpoints using JWT tokens.
+- **Swagger UI:** Automatically generated interactive API documentation.
 
 ## Installation
 
 ### Prerequisites
-
-- Python 3.x  
-- pip (Python package installer)  
-- SQLite  
+- Python 3.x
+- pip (Python package installer)
+- SQLite
 
 ### Steps to Run
+1. **Clone this repository or download the source code.**
 
-1. Clone this repository or download the code.
-
-2. Install the required dependencies:
+2. **Install the required dependencies:**
    ```bash
    pip install -r requirements.txt
+   ```
 
-# Service Microservice API Setup and Endpoints
+3. **Set up your `.env` file with the following environment variables:**
+   ```
+   DATABASE=service.db
+   SECRET_KEY=your_jwt_secret_key
+   ```
 
-## Set up your `.env` file with the following environment variables:
+4. **Initialize the database (if not already done by the application):**
+   ```bash
+   python -c "from db import init_db; init_db()"
+   ```
 
-```makefile
-DATABASE=service.db
-SECRET_KEY=your_jwt_secret_key
-```
-# Service Microservice API
+5. **Run the Flask app:**
+   ```bash
+   python app.py
+   ```
+   
+   The API will be available at `http://localhost:5000`.
 
-## Initialize the database:
+## API Endpoints
 
-```bash
-python -c "from db import init_db; init_db()"
+### Authentication
+All endpoints require a valid JWT token to be passed in the `Authorization` header. The token must be prefixed with `Bearer `.
 
-Run the Flask app:
-bash
-Kopier kode
-python app.py
-The API will be available at http://localhost:5000.
+### Endpoints
 
-API Endpoints
-Authentication
-All endpoints require a valid JWT token passed in the Authorization header. The token must be prefixed with Bearer.
+#### POST /services
+Create a new service record.
+**Requires authentication (JWT).**
 
-Endpoints
-POST /services
-plaintext
-Kopier kode
-Description: Create a new service record.
-Requires Authentication: ✅
-Parameters (JSON body):
-- vehicle_id: (integer) ID of the vehicle.
-- service_date: (string) Date of the service in YYYY-MM-DD format.
-- service_type: (string) Type of the service (e.g., "Oil Change").
-- milage_at_service: (integer) Mileage of the vehicle at the time of service.
-- service_provider: (string) Name of the service provider.
-- cost: (number) Cost of the service.
-Response: Returns the service_id of the newly created record and a success message.
-GET /services
-plaintext
-Kopier kode
-Description: Retrieve all service records or filter them by criteria.
-Requires Authentication: ✅
-Query Parameters:
-- vehicle_id: Filter by vehicle ID.
-- service_type: Filter by service type.
-- service_provider
+**Request Body:**
+- `vehicle_id`: ID of the vehicle
+- `service_date`: Date of the service
+- `service_type`: Type of the service performed
+- `milage_at_service`: The mileage on the vehicle at the time of service
+- `service_provider`: The service provider or garage
+- `cost`: The cost of the service
+
+**Response:**
+- Returns the `service_id` of the created record and a success message.
+
+#### GET /services
+Get a list of service records.
+**Requires authentication (JWT).**
+
+**Query Parameters:**
+- `vehicle_id`: Filter by vehicle ID
+- `service_type`: Filter by type of service
+- `service_provider`: Filter by service provider
+- `max_cost`: Filter by maximum allowed service cost
+- `before_date`: Filter services before a specific date
+- `after_date`: Filter services after a specific date
+
+**Response:**
+- Returns a JSON array of service records that match the filters.
+
+#### PUT /services/<int:service_id>
+Update an existing service record by its ID.
+**Requires authentication (JWT).**
+
+**Request Body (Any fields you want to update):**
+- `vehicle_id`
+- `service_date`
+- `service_type`
+- `milage_at_service`
+- `service_provider`
+- `cost`
+
+**Response:**
+- Returns a success message upon successful update.
+- Returns 404 if `service_id` is not found.
+
+#### DELETE /services/<int:service_id>
+Delete a service record by its ID.
+**Requires authentication (JWT).**
+
+**Response:**
+- Returns a success message upon successful deletion.
+- Returns 404 if `service_id` is not found.
+
+### GET /endpoints
+List all available endpoints in the API.
+**No authentication required.**
+
+## API Documentation
+Swagger UI is available at `/apidocs/` for detailed API documentation. It provides an interactive interface to test the API endpoints, view parameter descriptions, and examine response formats.
+
+## Database
+The microservice uses a SQLite database for storing service records. The database file location is specified by the `DATABASE` variable in the `.env` file. The `init_db()` function ensures that the necessary tables exist and can insert sample data if desired.
+
+---
