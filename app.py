@@ -47,7 +47,7 @@ swagger = Swagger(app, config=swagger_config)
 # Initialiser database
 init_db()
 
-@app.route('/services', methods=['POST'])
+@app.route('/add', methods=['POST'])
 @jwt_required()
 def add_service():
     """
@@ -101,7 +101,7 @@ def add_service():
     return jsonify({"id": service_id, "message": "Service added successfully"}), 201
 
 
-@app.route('/services', methods=['GET'])
+@app.route('/list', methods=['GET'])
 @jwt_required()
 def get_services():
     """
@@ -190,7 +190,7 @@ def get_services():
 
     return jsonify(services), 200
 
-@app.route('/services/<int:service_id>', methods=['PUT'])
+@app.route('/update/<int:service_id>', methods=['PUT'])
 @jwt_required()
 def update_service(service_id):
     """
@@ -259,7 +259,7 @@ def update_service(service_id):
     
     return jsonify({"message": "Service updated successfully"}), 200
 
-@app.route('/services/<int:service_id>', methods=['DELETE'])
+@app.route('/remove/<int:service_id>', methods=['DELETE'])
 @jwt_required()
 def delete_service(service_id):
     """
@@ -292,7 +292,7 @@ def delete_service(service_id):
     return jsonify({"message": "Service deleted successfully"}), 200
 
 
-@app.route('/endpoints', methods=['GET'])
+@app.route('/', methods=['GET'])
 def endpoints():
     """
     List all available endpoints in the API, including their descriptions, methods, and JWT token requirements.
