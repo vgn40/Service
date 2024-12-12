@@ -1,48 +1,81 @@
-# Service Microservice
+# Service Microservice API
 
-Denne microservice er udviklet med Flask og tilbyder CRUD-operationer for entiteten "Service" i et bilabonnementssystem. Den anvender JWT-autentifikation for at sikre, at kun autoriserede brugere kan oprette, læse, opdatere og slette serviceposter. Derudover integrerer microservicen Swagger via Flasgger for at give en nem og interaktiv dokumentation af API’et.
+This is a RESTful API built using Flask to manage service records in a car subscription system. It enables users to create, retrieve, update, and delete service records, with security ensured through JWT authentication. The service also provides filtering capabilities and interactive API documentation via Swagger.
 
-## Funktionalitet
+---
 
-1. **Autentifikation med JWT**  
-   Alle endpoints kræver et gyldigt JWT-token i headeren `Authorization: Bearer <token>`. Dette sikrer, at kun brugere med rette rettigheder kan foretage ændringer eller hente data.
+## Features
 
-2. **CRUD-operationer for Services**  
-   - **POST /services**: Opretter en ny servicepost ved at sende et JSON-body med de krævede felter (`vehicle_id`, `service_date`, `service_type`, `milage_at_service`, `service_provider`, `cost`). Returnerer et JSON-svar med det oprettede `service_id` og en succesbesked.
-   
-   - **GET /services**: Henter en liste af serviceposter. Understøtter filtrering ved hjælp af query-parametre som `vehicle_id`, `service_type`, `service_provider`, `max_cost`, `before_date` og `after_date`. Returnerer JSON med en liste af serviceposter.
-   
-   - **PUT /services/<service_id>**: Opdaterer en eksisterende servicepost. Der sendes et JSON-body med de felter, der skal ændres. Hvis `service_id` ikke findes, returneres 404. Returnerer en succesbesked ved vellykket opdatering.
-   
-   - **DELETE /services/<service_id>**: Sletter en eksisterende servicepost. Hvis `service_id` ikke findes, returneres 404. Ellers slettes posten og returnerer en succesbesked.
+- **Create a Service**: Add a new service record with details like vehicle ID, service type, cost, and more.
+- **Get Services**: Retrieve all service records or filter them using various criteria.
+- **Update a Service**: Modify details of an existing service record.
+- **Delete a Service**: Remove a service record from the system by its ID.
+- **Swagger UI**: Interactive API documentation available for testing and exploration.
+- **JWT Authentication**: Secure access to endpoints using JWT tokens.
 
-3. **Database**  
-   Microservicen benytter en SQLite-database, hvis navn og placering angives via en `.env` fil (`DATABASE=service.db`). Ved opstart initialiseres databasen via `init_db()`-funktionen, som sikrer at tabellerne findes og eventuelt indsætter sample data.
+---
 
-4. **Miljøvariabler (.env)**  
-   `.env`-filen indeholder mindst følgende variabler:
-   - `DATABASE` - stien eller navnet på databasefilen (f.eks. `service.db`)
-   - `SECRET_KEY` - en hemmelig nøgle, der bruges til at signere JWT-tokens
+## Installation
 
-   `load_dotenv()` henter disse variabler inden appen starter.
+### Prerequisites
 
-5. **Swagger-Dokumentation**  
-   Microservicen bruger Flasgger til at generere en Swagger UI-baseret dokumentation ved at læse docstrings i koden. Når appen kører, kan dokumentationen ses på `/apidocs/`. Dette giver en brugervenlig grænseflade til at teste endpoints, se hvilke parametre de tager, og hvilke svar de returnerer.
+- Python 3.x  
+- pip (Python package installer)  
+- SQLite  
 
-## Kørsel
+### Steps to Run
 
-** For at køre microservicen: **
+1. Clone this repository or download the code.
 
-6. **Sørg for at have en `.env` fil i samme directory som `app.py`:**
-   ```env
-   DATABASE=service.db
-   SECRET_KEY=din_hemmelige_noegle
+2. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
 
-7. **Kør appen:**
-   ```env
-   python app.py
+# Service Microservice API Setup and Endpoints
 
-Microservicen kører nu typisk på http://127.0.0.1:5000.
+## Set up your `.env` file with the following environment variables:
 
-Swagger UI: http://127.0.0.1:5000/apidocs/
-Endpoints kræver JWT-token i Authorization-headeren.
+```makefile
+DATABASE=service.db
+SECRET_KEY=your_jwt_secret_key
+
+# Service Microservice API
+
+## Initialize the database:
+
+```bash
+python -c "from db import init_db; init_db()"
+
+Run the Flask app:
+bash
+Kopier kode
+python app.py
+The API will be available at http://localhost:5000.
+
+API Endpoints
+Authentication
+All endpoints require a valid JWT token passed in the Authorization header. The token must be prefixed with Bearer.
+
+Endpoints
+POST /services
+plaintext
+Kopier kode
+Description: Create a new service record.
+Requires Authentication: ✅
+Parameters (JSON body):
+- vehicle_id: (integer) ID of the vehicle.
+- service_date: (string) Date of the service in YYYY-MM-DD format.
+- service_type: (string) Type of the service (e.g., "Oil Change").
+- milage_at_service: (integer) Mileage of the vehicle at the time of service.
+- service_provider: (string) Name of the service provider.
+- cost: (number) Cost of the service.
+Response: Returns the service_id of the newly created record and a success message.
+GET /services
+plaintext
+Kopier kode
+Description: Retrieve all service records or filter them by criteria.
+Requires Authentication: ✅
+Query Parameters:
+- vehicle_id: Filter by vehicle ID.
+- service_type: Filter by service type.
+- service_provider
