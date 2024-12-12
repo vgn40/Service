@@ -38,7 +38,7 @@ This is a RESTful API built using Flask to manage service records in a car subsc
 ```makefile
 DATABASE=service.db
 SECRET_KEY=your_jwt_secret_key
-
+```
 # Service Microservice API
 
 ## Initialize the database:
