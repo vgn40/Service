@@ -1,5 +1,3 @@
----
-
 # Service Microservice API
 
 This is a RESTful API built using Flask for managing service records within a car subscription system. It provides the ability to create, retrieve, update, and delete service entries, while ensuring security through JWT authentication. The service supports filtering service records and comes with detailed, interactive API documentation via Swagger.
@@ -115,5 +113,3 @@ Swagger UI is available at `/apidocs/` for detailed API documentation. It provid
 
 ## Database
 The microservice uses a SQLite database for storing service records. The database file location is specified by the `DATABASE` variable in the `.env` file. The `init_db()` function ensures that the necessary tables exist and can insert sample data if desired.
-
----
